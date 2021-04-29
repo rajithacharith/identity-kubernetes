@@ -46,4 +46,4 @@ Simple two pod IS deployment using kubernetes
 
     Get IP address and update /etc/hosts
 
-10. Goto  https://wso2is/carbon/admin/login.jsp
+10. Go to  https://wso2is/carbon/admin/login.jsp
