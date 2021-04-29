@@ -1,22 +1,49 @@
 # identity-kubernetes
 Simple two pod IS deployment using kubernetes
 
+# Prerequisite
+* [kubectl](https://kubernetes.io/docs/tasks/tools/)
+* [minikube](https://minikube.sigs.k8s.io/docs/start/)
+* virtualbox
+
 # STEPS
 
-1) kubectl apply -f identity-namespace.yaml
-2) kubectl apply -f identity-svc.yaml
-3) kubectl apply -f identity-server-conf.yaml
-4) kubectl apply -f identity-wso2is-service.yaml
-5) kubectl apply -f identity-server-ingress.yaml
-6) kubectl apply -f identity-server-deployment.yaml
+1. Start minikube cluster
 
-Kubectl version : v1.18.1
-Minikube version : 1.7.3
+    `minikube start — kubernetes-version v1.18.1 — vm-driver=virtualbox — cpus 4 — memory 8192`
 
-If you are using minikube To enable the NGINX Ingress controller, run the following command:
+2. Enable ingress in minikube
 
-minikube addons enable ingress
+    `minikube addons enable ingress`
 
-Add wso2is <minkube ip> to /etc/hosts
+3. Cluster partitioning by adding a namespace 
 
-https://wso2is/carbon/admin/login.jsp
+    `kubectl apply -f identity-namespace.yaml`
+
+4. Create a service account for wso2is
+
+    `kubectl apply -f identity-svc.yaml`
+
+5. Add a configmap for WSO2 is deployment.toml
+
+    `kubectl apply -f identity-server-conf.yaml`
+
+6. Create a wso2is service using
+
+    `kubectl apply -f identity-wso2is-service.yaml`
+
+7. Create ingress and add ingress rules 
+
+    `kubectl apply -f identity-server-ingress.yaml`
+
+8. Declare the Desired State of A Deployment
+
+    `kubectl apply -f identity-server-deployment.yaml`
+
+9. Add wso2is <minkube ip> to /etc/hosts
+
+    `kubectl get ingress -n wso2`
+
+    Get IP address and update /etc/hosts
+
+10. Goto  https://wso2is/carbon/admin/login.jsp
